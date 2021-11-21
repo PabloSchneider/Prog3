@@ -142,6 +142,7 @@ void deleteList(Node **list){
         curr_Node = curr_Node -> next;
         free(freeMe);
     }
+    curr_Node -> prev = NULL;
     freeMe = NULL;
     *list = NULL;
 }
