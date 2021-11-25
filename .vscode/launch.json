@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["'Elend Glogomir Problem unbrauchbar'"],
+            "args": [],
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
             "environment": [],

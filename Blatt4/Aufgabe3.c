@@ -6,11 +6,17 @@ enum{MAXLEN = 200};
 
 void transformstring(char eingabe[20][20],char *argv[], int argc){
     char (*strpEin)[20] = eingabe;
-    int counter= 0, i = 0;
+    int counter= 0, i = 0, j = 0;
     for(i = 1; i < argc; i++){
-        if(strcmp(strpEin[counter],argv[i])){
-            
+        while(strpEin[counter] != NULL){
+            printf("%s : %s\n", strpEin[counter], argv[i]);
+            if(strcmp(strpEin[counter],argv[i])){
+                printf("%lu \n",strlen(strpEin[counter]));
+                strpEin ++;
+            }
         }
+        strpEin = eingabe;
+        
     }
 
 
@@ -28,7 +34,6 @@ int main(int argc, char *argv[]){
     int z = 0;
     printf("gebe was ein\n");
     while(fgets(eingabe,MAXLEN,stdin)!= NULL){
-        printf("%s\n", eingabe);
         for(i = 0; i < strlen(eingabe); i++){
             if(eingabe[i] == '\n'){
                 eingabe[i] = '\0';
