@@ -14,7 +14,6 @@ void schreibbit(int zahl){
         printf("%d",(zahl & (0x01 << i)) > 0);
     }
     
-    
 }
 
 int main(void){

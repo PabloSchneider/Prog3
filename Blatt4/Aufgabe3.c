@@ -1,60 +1,77 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <ctype.h>
 enum{MAXLEN = 200};
 
-void transformstring(char eingabe[20][20],char *argv[], int argc){
-    char (*strpEin)[20] = eingabe;
-    int counter= 0, i = 0, j = 0;
-    for(i = 1; i < argc; i++){
-        while(strpEin[counter] != NULL){
-            printf("%s : %s\n", strpEin[counter], argv[i]);
-            if(strcmp(strpEin[counter],argv[i])){
-                printf("%lu \n",strlen(strpEin[counter]));
-                strpEin ++;
+void zensieren(int argc, char *argv[], char *eingabe){
+    int i = 0, j= 0, stellenNr = 0, wahr = 0;
+    char *satz = NULL;
+    argv++;    
+    for(i = 1; i< argc; i++){
+        satz = eingabe;
+        while(*satz != '\0'){
+            if(*satz =='\n'){
+                break;
             }
-        }
-        strpEin = eingabe;
-        
-    }
-
-
-
-}
-
-
-int main(int argc, char *argv[]){
-
-    char eingabe[MAXLEN]= {0};
-    char eingebenstring[20][20] = {0};
-    char wort[20] = {0};
-    int i = 0;
-    int j = 0;
-    int z = 0;
-    printf("gebe was ein\n");
-    while(fgets(eingabe,MAXLEN,stdin)!= NULL){
-        for(i = 0; i < strlen(eingabe); i++){
-            if(eingabe[i] == '\n'){
-                eingabe[i] = '\0';
+            if(*satz == ' '){
+                satz ++;
             }
-            if(eingabe[i] != ' ' || eingabe[i] != '\0' ){
-                j = 0;
-                
-                while(eingabe[i] != ' ' && eingabe[i] != '\n'){
-                    wort[j] = eingabe[i];
-                    i++;
+            if(*satz != (*argv)[0]){
+                satz++;
+            }
+            if(*satz == (*argv)[0]){
+                j = 1;
+                wahr = 0;
+                stellenNr = 0;
+                satz++;
+                while((*argv)[j] != '\0'){
+                    if(*satz == (*argv)[j]){
+                        printf("%c : %c\n" , *satz, (*argv)[j]);
+                        stellenNr++;
+                        satz++;
+                    }else{
+                        wahr = 1;
+                        break; 
+                    }
                     j++;
                 }
-                wort[j] = '\0';
-                strcpy(eingebenstring[z], wort);
-                printf("Wort: %s\n", wort);
-                z++;  
+                if(wahr == 0){
+                    satz = satz - stellenNr;
+                    j = 1;
+                    while ((*argv)[j] != '\0')
+                    {
+                        j++;
+                        *satz = '*';
+                        satz++;
+                    }
+                }else{
+                    while(isalpha(*satz)){
+                        satz++;
+                    }
                 }
-        }    
-        printf("gebe was ein\n");
-        transformstring(eingebenstring, argv, argc);
+                
+            }
+        }
+        j = 0;
+        argv++;
     }
-    printf("ende\n");
+    while(*eingabe != '\0'){
+        printf("%c", *eingabe);
+        eingabe++;
+    }
+    printf("\n");
 
 }
+
+int main(int argc, char *argv[]){    
+    char eingabe[MAXLEN]= {0};
+    
+    while(fgets(eingabe,MAXLEN,stdin)!= NULL){
+        zensieren(argc, argv, eingabe);
+        
+    }
+    return 0;
+
+}
+

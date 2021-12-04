@@ -18,12 +18,7 @@ void zensieren(int argc, char *argv[], char *eingabe){
                 satz ++;
             }
             if(*satz != (*argv)[0]){
-                while((*satz != ' ')){
-                    satz++;
-                    if(*satz =='\n'){
-                        break;
-                    }
-                }
+                satz++;
             }
             if(*satz == (*argv)[0]){
                 j = 1;
@@ -43,8 +38,10 @@ void zensieren(int argc, char *argv[], char *eingabe){
                 }
                 if(wahr == 0){
                     satz = satz - stellenNr;
-                    while (isalpha(*satz))
+                    j = 1;
+                    while ((*argv)[j] != '\0')
                     {
+                        j++;
                         *satz = '*';
                         satz++;
                     }
@@ -57,9 +54,6 @@ void zensieren(int argc, char *argv[], char *eingabe){
             }
         }
         j = 0;
-
-
-        
         argv++;
     }
     while(*eingabe != '\0'){
@@ -75,8 +69,8 @@ int main(int argc, char *argv[]){
     
     while(fgets(eingabe,MAXLEN,stdin)!= NULL){
         zensieren(argc, argv, eingabe);
+        
     }
     return 0;
 
 }
-
